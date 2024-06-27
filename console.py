@@ -139,10 +139,8 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
         except SyntaxError:
             print("** class name missing **")
-            return
         except NameError:
             print("** class doesn't exist **")
-            return
 
     def help_create(self):
         """ Help information for the create method """
