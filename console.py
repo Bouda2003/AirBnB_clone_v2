@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
             kwargs = {}
             for i in range (1, len(Tokens)):
                 key, value = tuple(Tokens[i].split("="))
-                if value[0] = '"':
+                if value.startswith('"') and value.endswith('"'):
                     value = value.strip('"').replace("_", " ")
                 else:
                     value = eval(value)
