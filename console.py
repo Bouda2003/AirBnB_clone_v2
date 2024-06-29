@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             for i in range(1, len(Tokens)):
                 key, value = tuple(Tokens[i].split("="))
                 if value.startswith('"') and value.endswith('"'):
-                    value = value.replace('\\"', '"').replace("_", " ")
+                    value = value.replace('"', '\\"').replace("_", " ")
                 else:
                     try:
                         if '.' in value:
