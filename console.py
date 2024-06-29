@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             for i in range(1, len(Tokens)):
                 key, value = tuple(Tokens[i].split("="))
                 if value.startswith('"') and value.endswith('"'):
-                    value = value.replace('"', '\\"').replace("_", " ")
+                    value = value.replace('\\"', '"').replace("_", " ")
                 else:
                     try:
                         if '.' in value:
@@ -144,6 +144,7 @@ class HBNBCommand(cmd.Cmd):
                 new_instance = HBNBCommand.classes[Tokens[0]]()
         new_instance.save()
         print(new_instance.id)
+        print(new_instance)
 
     def help_create(self):
         """ Help information for the create method """
