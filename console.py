@@ -134,8 +134,8 @@ class HBNBCommand(cmd.Cmd):
                             value = float(value)
                         else:
                             value = int(value)
-                    except ValueError
-                    continue
+                    except ValueError:
+                        continue
                 kwargs[key] = value
 
             if kwargs:
