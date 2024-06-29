@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] is '{' and pline[-1] is '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -124,20 +124,26 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             kwargs = {}
-            for i in range (1, len(Tokens)):
+            for i in range(1, len(Tokens)):
                 key, value = tuple(Tokens[i].split("="))
                 if value.startswith('"') and value.endswith('"'):
-                    value = value.strip('"').replace("_", " ")
+                    value = value.replace('"', '\\"').replace("_", " ")
                 else:
-                    value = eval(value)
+                    try:
+                        if '.' in value:
+                            value = float(value)
+                        else:
+                            value = int(value)
+                    except ValueError
+                    continue
                 kwargs[key] = value
 
-            if kwargs == {}:
-                new_instance = HBNBCommand.classes[Tokens[0]]()
-            else:
+            if kwargs:
                 new_instance = HBNBCommand.classes[Tokens[0]](**kwargs)
-        print(new_instance.id)
+            else:
+                new_instance = HBNBCommand.classes[Tokens[0]]()
         new_instance.save()
+        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
@@ -332,6 +338,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
