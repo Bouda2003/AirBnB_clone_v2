@@ -143,7 +143,6 @@ class HBNBCommand(cmd.Cmd):
             else:
                 new_instance = HBNBCommand.classes[Tokens[0]]()
         new_instance.save()
-        print(new_instance.id)
         print(new_instance)
 
     def help_create(self):
