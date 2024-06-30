@@ -14,7 +14,7 @@ class FileStorage:
             return FileStorage.__objects
         new_dict = {}
         for key in FileStorage.__objects.keys():
-            if FileStorage.__objects[key].__class__ == cls:
+            if FileStorage.__objects[key].__class__.__name__ == cls:
                 new_dict[key] = FileStorage.__objects[key]
         return new_dict
 

@@ -21,9 +21,9 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
+                'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                'State': State, 'City': City, 'Amenity': Amenity,
+                'Review': Review
               }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             for i in range(1, len(Tokens)):
                 key, value = tuple(Tokens[i].split("="))
                 if value.startswith('"') and value.endswith('"'):
-                    value = value.replace('"', '\\"').replace("_", " ")
+                    value = value.strip('"').replace("_", " ")
                 else:
                     try:
                         if '.' in value:
@@ -225,14 +225,14 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all(args).items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
-        print(print_list)
+        print("[" + ", ".join(print_list) + "]")
 
     def help_all(self):
         """ Help information for the all command """
