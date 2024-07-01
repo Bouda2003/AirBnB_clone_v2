@@ -4,7 +4,19 @@ from os import getenv
 from models.base_model import BaseModel, Base
 from models.review import Review
 from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from sqlalchemy import MetaData, Table
 from sqlalchemy.orm import relationship
+
+
+metadata = Base.metadata
+place_amenity = Table(
+        'place_amenity', metadata,
+        Column(
+            'place_id', String(60), ForeignKey('places.id'), nullable=False),
+        Column(
+            'amenity_id', String(60),
+            ForeignKey('amenities.id'), nullable=False)
+        )
 
 
 class Place(BaseModel, Base):
@@ -21,4 +33,7 @@ class Place(BaseModel, Base):
     latitude = Column(Float(), nullable=True)
     longitude = Column(Float(), nullable=True)
     reviews = relationship("Review", backref="place")
+    amenities = relationship(
+            "Amenity", secondary=place_amenity,
+            back_populates="place_amenities", viewonly=False)
     amenity_ids = []
